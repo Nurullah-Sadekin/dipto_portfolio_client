@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^mv \\.github \\.\\./ruhullah-portfolio-dotgithub-backup && npx create-next-app@latest \\. --typescript --eslint --app --use-npm --import-alias \"@/\\*\" --yes && mv \\.\\./ruhullah-portfolio-dotgithub-backup \\.github$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
