@@ -21,7 +21,7 @@ export default async function Home() {
               <a href="#skills">Skills</a>
               <a href="#portfolio">Projects</a>
               <a href="#contact">Contact</a>
-              <Link href="/admin">Admin</Link>
+              {/* <Link href="/admin">Admin</Link> */}
             </nav>
           </header>
 
