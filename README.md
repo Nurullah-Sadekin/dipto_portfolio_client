@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Event Activation Portfolio
 
-## Getting Started
+A premium corporate personal portfolio website for an event activation specialist with client servicing experience.
 
-First, run the development server:
+## Implemented Features
+
+- Landing page with hero, core stats, featured event cards, social links, and inquiry section
+- Strategic Planner top section with dark navigation and profile card
+- Featured work section that shows six events on the homepage
+- Separate all-events page for portfolio browsing
+- Dynamic event detail pages using route slugs
+- Event detail content includes location, client, attendee count, event experience, gallery images, and client feedback
+- Password-protected admin panel at `/admin` for create/update/delete event management
+- API routes for event CRUD at `/api/events` and `/api/events/[slug]`
+- Responsive layout for desktop and mobile
+
+## Tech Stack
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS v4 (base import)
+
+## Project Structure
+
+- app/page.tsx: landing page
+- app/events/page.tsx: all-events listing page
+- app/events/[slug]/page.tsx: dynamic event case study page
+- lib/events.ts: portfolio event data source
+- components/EventCard.tsx: reusable event card component
+
+## Run the Project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The development server runs on localhost port 3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Validation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+Both commands currently pass.
 
-To learn more about Next.js, take a look at the following resources:
+## Admin Panel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Route: `/admin`
+- Default password: `Admin@123`
+- Recommended: set `ADMIN_PASSWORD` in environment variables before production deployment.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Example local env:
 
-## Deploy on Vercel
+```bash
+cp .env.example .env.local
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- This project can be deployed to Vercel.
+- Event data writes use local filesystem in development and `/tmp` in Vercel runtime.
+- Note: `/tmp` storage is ephemeral; for persistent production admin updates, switch to a managed database.
+
+## Placeholder Content Note
+
+All event names, descriptions, metrics, and images are placeholders and should be replaced with real project content.
