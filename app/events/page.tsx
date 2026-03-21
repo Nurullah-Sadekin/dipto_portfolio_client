@@ -2,8 +2,6 @@ import Link from "next/link";
 import { EventCard } from "@/components/EventCard";
 import { getAllEvents } from "@/lib/eventStore";
 
-export const dynamic = "force-dynamic";
-
 export default async function EventsPage() {
   const events = await getAllEvents();
 

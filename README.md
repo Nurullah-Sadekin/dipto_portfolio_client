@@ -63,6 +63,13 @@ cp .env.example .env.local
 - Event data writes use local filesystem in development and `/tmp` in Vercel runtime.
 - Note: `/tmp` storage is ephemeral; for persistent production admin updates, switch to a managed database.
 
+## GitHub Pages
+
+- Automated GitHub Pages deployment is configured via [deploy-github-pages.yml](.github/workflows/deploy-github-pages.yml).
+- Push to `main` triggers static export and deployment to GitHub Pages.
+- In GitHub Pages mode, API routes are disabled during build because GitHub Pages is static-only.
+- The `/admin` route remains visible but shows an "Unavailable on GitHub Pages" message.
+
 ## Placeholder Content Note
 
 All event names, descriptions, metrics, and images are placeholders and should be replaced with real project content.

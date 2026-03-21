@@ -3,8 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllEvents, getEventBySlug } from "@/lib/eventStore";
 
-export const dynamic = "force-dynamic";
-
 type EventDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
