@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getSiteContent } from "@/lib/siteContentStore";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,11 +13,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Ruhullah Arefin | Strategic Planner",
-  description:
-    "Strategic planner portfolio for event activation management and client servicing case studies.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteContent = await getSiteContent();
+
+  return {
+    title: siteContent.metadataTitle,
+    description: siteContent.metadataDescription,
+  };
+}
 
 export default function RootLayout({
   children,

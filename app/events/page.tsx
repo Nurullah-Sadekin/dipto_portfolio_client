@@ -1,19 +1,18 @@
 import Link from "next/link";
 import { EventCard } from "@/components/EventCard";
 import { getAllEvents } from "@/lib/eventStore";
+import { getSiteContent } from "@/lib/siteContentStore";
 
 export default async function EventsPage() {
+  const siteContent = await getSiteContent();
   const events = await getAllEvents();
 
   return (
     <main className="site-container section-gap">
       <div className="section-header">
-        <p className="eyebrow">All Events</p>
-        <h1>Portfolio of Activation Projects</h1>
-        <p>
-          A growing portfolio of experiential campaigns, launch events, and
-          high-engagement brand activations.
-        </p>
+        <p className="eyebrow">{siteContent.eventsPage.eyebrow}</p>
+        <h1>{siteContent.eventsPage.title}</h1>
+        <p>{siteContent.eventsPage.description}</p>
       </div>
 
       <div className="event-grid">
@@ -24,7 +23,7 @@ export default async function EventsPage() {
 
       <div className="section-cta">
         <Link className="btn btn-outline" href="/">
-          Back to Home
+          {siteContent.eventsPage.backButtonLabel}
         </Link>
       </div>
     </main>

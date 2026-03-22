@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllEvents, getEventBySlug } from "@/lib/eventStore";
+import { getSiteContent } from "@/lib/siteContentStore";
 
 type EventDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -14,6 +15,7 @@ export async function generateStaticParams() {
 
 export default async function EventDetailPage({ params }: EventDetailPageProps) {
   const { slug } = await params;
+  const siteContent = await getSiteContent();
   const event = await getEventBySlug(slug);
 
   if (!event) {
@@ -23,7 +25,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
   return (
     <main className="site-container section-gap">
       <div className="section-header">
-        <p className="eyebrow">Case Study</p>
+        <p className="eyebrow">{siteContent.eventDetail.eyebrow}</p>
         <h1>{event.name}</h1>
         <p>{event.shortDescription}</p>
       </div>
@@ -39,26 +41,26 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
 
       <section className="detail-meta-grid">
         <article>
-          <h3>Event Location</h3>
+          <h3>{siteContent.eventDetail.locationLabel}</h3>
           <p>{event.location}</p>
         </article>
         <article>
-          <h3>Client</h3>
+          <h3>{siteContent.eventDetail.clientLabel}</h3>
           <p>{event.client}</p>
         </article>
         <article>
-          <h3>Attendee Count</h3>
+          <h3>{siteContent.eventDetail.attendeesLabel}</h3>
           <p>{event.attendees}</p>
         </article>
       </section>
 
       <section className="detail-block">
-        <h2>Event Experience</h2>
+        <h2>{siteContent.eventDetail.experienceTitle}</h2>
         <p>{event.experience}</p>
       </section>
 
       <section className="detail-block">
-        <h2>Event Gallery</h2>
+        <h2>{siteContent.eventDetail.galleryTitle}</h2>
         <div className="gallery-grid">
           {event.gallery.map((image) => (
             <Image
@@ -73,13 +75,13 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
       </section>
 
       <section className="detail-block testimonial">
-        <h2>Client Feedback</h2>
+        <h2>{siteContent.eventDetail.feedbackTitle}</h2>
         <p>&quot;{event.clientFeedback}&quot;</p>
       </section>
 
       <div className="section-cta">
         <Link className="btn btn-outline" href="/events">
-          Back to All Events
+          {siteContent.eventDetail.backButtonLabel}
         </Link>
       </div>
     </main>

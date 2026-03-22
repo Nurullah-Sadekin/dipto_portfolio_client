@@ -203,6 +203,14 @@ p {
   max-width: 1100px;
 }
 
+.admin-section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.8);
+}
+
 .admin-login {
   display: grid;
   gap: 0.75rem;
@@ -257,6 +265,11 @@ p {
 
 .admin-form {
   margin-bottom: 1.5rem;
+}
+
+.admin-preview-note {
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .admin-grid-two {

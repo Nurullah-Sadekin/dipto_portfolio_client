@@ -2,10 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { EventCard } from "@/components/EventCard";
 import { getAllEvents } from "@/lib/eventStore";
+import { getSiteContent } from "@/lib/siteContentStore";
 
 export default async function Home() {
+  const siteContent = await getSiteContent();
   const events = await getAllEvents();
-  const featuredEvents = events.slice(0, 6);
+  const featuredEvents = events.slice(0, siteContent.featuredWork.count);
 
   return (
     <main>
@@ -13,73 +15,65 @@ export default async function Home() {
         <div className="site-container">
           <header className="hero-nav">
             <Link href="/" className="brand-mark">
-              RA.
+              {siteContent.brandMark}
             </Link>
             <nav>
-              <a href="#home">Home</a>
-              <a href="#about">About</a>
-              <a href="#skills">Skills</a>
-              <a href="#portfolio">Projects</a>
-              <a href="#contact">Contact</a>
-              {/* <Link href="/admin">Admin</Link> */}
+              {siteContent.navLinks.map((link) => (
+                <a key={`${link.label}-${link.href}`} href={link.href}>
+                  {link.label}
+                </a>
+              ))}
             </nav>
           </header>
 
           <div className="hero-main">
             <div className="hero-copy">
-              <p className="hello-line">Hello, I&apos;m</p>
-              <h1>Ruhullah Arefin</h1>
-              <h2>Strategic Planner</h2>
-              <p className="lead-dark">
-                Strategic planner for event activation campaigns with deep
-                client servicing experience. I design brand experiences that
-                connect business goals with audience engagement.
-              </p>
+              <p className="hello-line">{siteContent.hero.greeting}</p>
+              <h1>{siteContent.hero.name}</h1>
+              <h2>{siteContent.hero.title}</h2>
+              <p className="lead-dark">{siteContent.hero.description}</p>
               <div className="hero-actions">
-                <a className="btn btn-primary" href="#portfolio">
-                  View My Work
+                <a className="btn btn-primary" href={siteContent.hero.primaryCtaHref}>
+                  {siteContent.hero.primaryCtaLabel}
                 </a>
-                <a className="btn btn-outline-dark" href="#inquiry">
-                  Get In Touch
+                <a
+                  className="btn btn-outline-dark"
+                  href={siteContent.hero.secondaryCtaHref}
+                >
+                  {siteContent.hero.secondaryCtaLabel}
                 </a>
               </div>
             </div>
 
             <aside className="profile-card">
               <Image
-                src="https://picsum.photos/seed/ruhullah-profile/420/420"
-                alt="Ruhullah Arefin"
+                src={siteContent.profile.image}
+                alt={siteContent.profile.imageAlt}
                 width={240}
                 height={240}
                 className="profile-avatar"
                 priority
               />
-              <h3>Strategic Planner</h3>
-              <p>Event Activation and Client Servicing</p>
-              <small>Dhaka, Bangladesh</small>
+              <h3>{siteContent.profile.title}</h3>
+              <p>{siteContent.profile.subtitle}</p>
+              <small>{siteContent.profile.location}</small>
             </aside>
           </div>
           <div className="stat-row dark">
-            <article>
-              <strong>45+</strong>
-              <span>Events Delivered</span>
-            </article>
-            <article>
-              <strong>80K+</strong>
-              <span>Audience Touchpoints</span>
-            </article>
-            <article>
-              <strong>18</strong>
-              <span>Cities Activated</span>
-            </article>
+            {siteContent.stats.map((stat) => (
+              <article key={`${stat.value}-${stat.label}`}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="site-container section-gap" id="portfolio">
         <div className="section-header">
-          <p className="eyebrow">Featured Work</p>
-          <h2>Selected Event Activations</h2>
+          <p className="eyebrow">{siteContent.featuredWork.eyebrow}</p>
+          <h2>{siteContent.featuredWork.title}</h2>
         </div>
         <div className="event-grid">
           {featuredEvents.map((event) => (
@@ -88,85 +82,90 @@ export default async function Home() {
         </div>
         <div className="section-cta">
           <Link className="btn btn-dark" href="/events">
-            See All Events
+            {siteContent.featuredWork.buttonLabel}
           </Link>
         </div>
       </section>
 
       <section className="site-container section-gap two-col" id="skills">
         <div>
-          <p className="eyebrow">What I Do</p>
-          <h2>Strategic Planning with Reliable Client Servicing</h2>
-          <p>
-            From ideation to on-ground execution, I coordinate teams,
-            production, and stakeholder communication so campaigns run cleanly
-            and deliver meaningful audience engagement.
-          </p>
+          <p className="eyebrow">{siteContent.skills.eyebrow}</p>
+          <h2>{siteContent.skills.title}</h2>
+          <p>{siteContent.skills.description}</p>
         </div>
         <ul className="service-list">
-          <li>Activation concept planning and rollout</li>
-          <li>Vendor and timeline management</li>
-          <li>Brand and client communication handling</li>
-          <li>Audience engagement tracking and reporting</li>
+          {siteContent.skills.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </section>
 
       <section className="site-container section-gap" id="about">
         <div className="section-header">
-          <p className="eyebrow">About</p>
-          <h2>Planner Mindset with Execution Discipline</h2>
-          <p>
-            I work as a strategic planner in event management, translating
-            campaign goals into immersive live experiences while protecting
-            timelines, budgets, and stakeholder confidence.
-          </p>
+          <p className="eyebrow">{siteContent.about.eyebrow}</p>
+          <h2>{siteContent.about.title}</h2>
+          <p>{siteContent.about.description}</p>
         </div>
       </section>
 
       <section className="site-container section-gap" id="contact">
         <div className="section-header">
-          <p className="eyebrow">Social and Contact</p>
-          <h2>Let&apos;s Connect</h2>
+          <p className="eyebrow">{siteContent.contact.eyebrow}</p>
+          <h2>{siteContent.contact.title}</h2>
+          <p>{siteContent.contact.description}</p>
         </div>
         <div className="social-grid">
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">
-            Instagram
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-            LinkedIn
-          </a>
-          <a href="mailto:contact@example.com">Email</a>
-          <a href="https://wa.me/8801000000000" target="_blank" rel="noreferrer">
-            WhatsApp
-          </a>
+          {siteContent.contact.links.map((link) => (
+            <a
+              key={`${link.label}-${link.href}`}
+              href={link.href}
+              target={link.href.startsWith("http") ? "_blank" : undefined}
+              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </section>
 
       <section className="site-container section-gap inquiry" id="inquiry">
         <div className="section-header">
-          <p className="eyebrow">Contact Us</p>
-          <h2>Tell Me About Your Next Event</h2>
+          <p className="eyebrow">{siteContent.inquiry.eyebrow}</p>
+          <h2>{siteContent.inquiry.title}</h2>
         </div>
         <form className="inquiry-form">
-          <label htmlFor="name">Full Name</label>
-          <input id="name" name="name" placeholder="Your full name" />
+          <label htmlFor="name">{siteContent.inquiry.nameLabel}</label>
+          <input
+            id="name"
+            name="name"
+            placeholder={siteContent.inquiry.namePlaceholder}
+          />
 
-          <label htmlFor="email">Work Email</label>
-          <input id="email" type="email" name="email" placeholder="name@company.com" />
+          <label htmlFor="email">{siteContent.inquiry.emailLabel}</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder={siteContent.inquiry.emailPlaceholder}
+          />
 
-          <label htmlFor="company">Company</label>
-          <input id="company" name="company" placeholder="Brand or company" />
+          <label htmlFor="company">{siteContent.inquiry.companyLabel}</label>
+          <input
+            id="company"
+            name="company"
+            placeholder={siteContent.inquiry.companyPlaceholder}
+          />
 
-          <label htmlFor="details">Project Query</label>
+          <label htmlFor="details">{siteContent.inquiry.detailsLabel}</label>
           <textarea
             id="details"
             name="details"
             rows={5}
-            placeholder="Share your event objective, expected audience size, and timeline."
+            placeholder={siteContent.inquiry.detailsPlaceholder}
           />
 
           <button type="submit" className="btn btn-primary">
-            Submit Inquiry
+            {siteContent.inquiry.buttonLabel}
           </button>
         </form>
       </section>
