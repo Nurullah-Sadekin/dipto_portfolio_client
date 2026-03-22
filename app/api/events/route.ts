@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { EventItem } from "@/lib/events";
+import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { createEvent, getAllEvents } from "@/lib/eventStore";
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "Admin@123";
-
-function isAuthorized(request: NextRequest) {
-  const password = request.headers.get("x-admin-password");
-  return password === ADMIN_PASSWORD;
-}
 
 function hasRequiredFields(input: Partial<EventItem>) {
   return (
@@ -34,7 +28,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  if (!isAuthorized(request)) {
+  if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

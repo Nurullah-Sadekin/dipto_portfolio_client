@@ -10,7 +10,7 @@ A premium corporate personal portfolio website for an event activation specialis
 - Separate all-events page for portfolio browsing
 - Dynamic event detail pages using route slugs
 - Event detail content includes location, client, attendee count, event experience, gallery images, and client feedback
-- Password-protected admin panel at `/admin` for create/update/delete event management
+- Username/password-protected admin panel at `/admin` for create/update/delete event management
 - API routes for event CRUD at `/api/events` and `/api/events/[slug]`
 - Responsive layout for desktop and mobile
 
@@ -48,8 +48,9 @@ Both commands currently pass.
 ## Admin Panel
 
 - Route: `/admin`
-- Default password: `Admin@123`
-- Recommended: set `ADMIN_PASSWORD` in environment variables before production deployment.
+- Default username: `ruhullah`
+- Default password: `@Ruh1234`
+- Recommended: set `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_TOKEN` in environment variables before production deployment.
 
 Example local env:
 
@@ -62,13 +63,6 @@ cp .env.example .env.local
 - This project can be deployed to Vercel.
 - Event data writes use local filesystem in development and `/tmp` in Vercel runtime.
 - Note: `/tmp` storage is ephemeral; for persistent production admin updates, switch to a managed database.
-
-## GitHub Pages
-
-- Automated GitHub Pages deployment is configured via [deploy-github-pages.yml](.github/workflows/deploy-github-pages.yml).
-- Push to `main` triggers static export and deployment to GitHub Pages.
-- In GitHub Pages mode, API routes are disabled during build because GitHub Pages is static-only.
-- The `/admin` route remains visible but shows an "Unavailable on GitHub Pages" message.
 
 ## Placeholder Content Note
 

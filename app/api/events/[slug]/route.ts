@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { EventItem } from "@/lib/events";
+import { isAdminAuthenticated } from "@/lib/adminAuth";
 import { deleteEvent, getEventBySlug, updateEvent } from "@/lib/eventStore";
-
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "Admin@123";
 
 type RouteParams = {
   params: Promise<{ slug: string }>;
 };
-
-function isAuthorized(request: NextRequest) {
-  const password = request.headers.get("x-admin-password");
-  return password === ADMIN_PASSWORD;
-}
 
 export async function GET(_request: NextRequest, { params }: RouteParams) {
   const { slug } = await params;
@@ -25,7 +19,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
 }
 
 export async function PUT(request: NextRequest, { params }: RouteParams) {
-  if (!isAuthorized(request)) {
+  if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -47,7 +41,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 }
 
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
-  if (!isAuthorized(request)) {
+  if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
