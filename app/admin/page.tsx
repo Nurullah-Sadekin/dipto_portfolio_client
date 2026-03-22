@@ -1,18 +1,23 @@
-import { AdminPanelClient } from "@/components/AdminPanelClient";
+import { AdminPortalClient } from "@/components/AdminPortalClient";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
-import { getAllEvents } from "@/lib/eventStore";
-import { getSiteContent } from "@/lib/siteContentStore";
+import { getAllLeads } from "@/lib/leadStore";
+import { getAllProjects } from "@/lib/projectStore";
+import { getSiteSettings } from "@/lib/siteSettingsStore";
 
 export default async function AdminPage() {
-  const events = await getAllEvents();
-  const siteContent = await getSiteContent();
+  const [projects, leads, settings] = await Promise.all([
+    getAllProjects(),
+    getAllLeads(),
+    getSiteSettings(),
+  ]);
   const initialAuthenticated = await isAdminAuthenticated();
 
   return (
-    <AdminPanelClient
+    <AdminPortalClient
       initialAuthenticated={initialAuthenticated}
-      initialEvents={events}
-      initialSiteContent={siteContent}
+      initialLeads={leads}
+      initialProjects={projects}
+      initialSettings={settings}
     />
   );
 }

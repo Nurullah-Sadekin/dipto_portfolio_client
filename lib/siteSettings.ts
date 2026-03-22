@@ -1,0 +1,144 @@
+export type ImpactCounter = {
+  id: string;
+  label: string;
+  value: number;
+  suffix: string;
+};
+
+export type ProcessStep = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+export type StrategyItem = {
+  id: string;
+  name: string;
+  type: "Methodology" | "Tech Tool";
+  description: string;
+};
+
+export type SiteSettings = {
+  metadataTitle: string;
+  metadataDescription: string;
+  brandName: string;
+  heroHeadline: string;
+  heroDescription: string;
+  heroPrimaryCtaLabel: string;
+  heroSecondaryCtaLabel: string;
+  heroPrimaryCtaHref: string;
+  heroSecondaryCtaHref: string;
+  processHeading: string;
+  processSubheading: string;
+  portfolioHeading: string;
+  portfolioSubheading: string;
+  stackHeading: string;
+  stackSubheading: string;
+  stackFilterLabels: {
+    all: string;
+    methodology: string;
+    techTool: string;
+  };
+  ctaHeading: string;
+  ctaDescription: string;
+  ctaButtonLabel: string;
+  impactCounters: ImpactCounter[];
+  processSteps: ProcessStep[];
+  strategyItems: StrategyItem[];
+};
+
+export const defaultSiteSettings: SiteSettings = {
+  metadataTitle: "The Strategic Customer Portfolio",
+  metadataDescription:
+    "Operations and strategic planning portfolio focused on turning complex visions into scalable systems.",
+  brandName: "Strategic Ops",
+  heroHeadline: "Turning complex visions into scalable systems.",
+  heroDescription:
+    "I partner with operators, founders, and leadership teams to diagnose delivery friction, design disciplined operating systems, and implement measurable improvements across planning, execution, and optimization.",
+  heroPrimaryCtaLabel: "Explore Case Studies",
+  heroSecondaryCtaLabel: "Schedule a Strategy Audit",
+  heroPrimaryCtaHref: "#portfolio",
+  heroSecondaryCtaHref: "#strategy-audit",
+  processHeading: "Process Roadmap",
+  processSubheading: "A disciplined pathway from operational noise to repeatable scale.",
+  portfolioHeading: "Bento Grid Portfolio",
+  portfolioSubheading:
+    "Selected case studies across audit, transformation planning, and operational optimization.",
+  stackHeading: "Strategy Stack",
+  stackSubheading:
+    "Filter the operating toolkit across methodologies and technology enablers.",
+  stackFilterLabels: {
+    all: "All",
+    methodology: "Methodologies",
+    techTool: "Tech Tools",
+  },
+  ctaHeading: "Schedule a Strategy Audit",
+  ctaDescription:
+    "Share your current constraints, transformation goals, and delivery pressure points. I will review the system and recommend the next operating move.",
+  ctaButtonLabel: "Request Audit",
+  impactCounters: [
+    { id: "experience", label: "Experience", value: 11, suffix: " Years" },
+    { id: "efficiency", label: "Efficiency", value: 38, suffix: "%" },
+    { id: "projects", label: "Projects", value: 54, suffix: "+" },
+  ],
+  processSteps: [
+    {
+      id: "audit",
+      title: "Audit",
+      description: "Map current-state processes, identify constraints, and expose hidden drag.",
+    },
+    {
+      id: "strategy",
+      title: "Strategy",
+      description: "Translate findings into prioritized initiatives, ownership, and operating rules.",
+    },
+    {
+      id: "implementation",
+      title: "Implementation",
+      description: "Deploy systems, cadences, and controls with minimal disruption to execution.",
+    },
+    {
+      id: "optimization",
+      title: "Optimization",
+      description: "Refine performance with KPI reviews, feedback loops, and continuous improvements.",
+    },
+  ],
+  strategyItems: [
+    {
+      id: "lean-ops",
+      name: "Lean Operating Design",
+      type: "Methodology",
+      description: "Process simplification, waste reduction, and throughput improvement.",
+    },
+    {
+      id: "okrs",
+      name: "OKR Cascading",
+      type: "Methodology",
+      description: "Structured goal alignment between strategy, teams, and execution cadence.",
+    },
+    {
+      id: "risk-matrix",
+      name: "Risk Governance Matrix",
+      type: "Methodology",
+      description: "Escalation and accountability frameworks for operational risk management.",
+    },
+    {
+      id: "dashboarding",
+      name: "Executive Dashboards",
+      type: "Tech Tool",
+      description: "Real-time visibility into delivery health, blockers, and KPI movement.",
+    },
+    {
+      id: "automation",
+      name: "Workflow Automation",
+      type: "Tech Tool",
+      description: "Task routing, SLA tracking, and system-triggered decision support.",
+    },
+    {
+      id: "forecasting",
+      name: "Planning Analytics",
+      type: "Tech Tool",
+      description: "Forecasting models, scenario planning, and performance diagnostics.",
+    },
+  ],
+};

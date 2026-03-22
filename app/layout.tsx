@@ -1,24 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { getSiteContent } from "@/lib/siteContentStore";
+import { Inter } from "next/font/google";
+import { ToasterProvider } from "@/components/ToasterProvider";
+import { getSiteSettings } from "@/lib/siteSettingsStore";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const siteContent = await getSiteContent();
+  const siteSettings = await getSiteSettings();
 
   return {
-    title: siteContent.metadataTitle,
-    description: siteContent.metadataDescription,
+    title: siteSettings.metadataTitle,
+    description: siteSettings.metadataDescription,
   };
 }
 
@@ -28,11 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <ToasterProvider />
+      </body>
     </html>
   );
 }
